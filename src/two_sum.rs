@@ -17,11 +17,7 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     let (idx, first) = nums
         .into_iter()
         .enumerate()
-        .find(|(i, x)| {
-            lookup
-                .get(&(target - x))
-                .map_or(false, |j| j != i)
-        })
+        .find(|(i, x)| lookup.get(&(target - x)).map_or(false, |j| j != i))
         /*
          *  Blech.  But the constraint is there _will_ be a solution, so the return
          *  type does not allow for Monads
