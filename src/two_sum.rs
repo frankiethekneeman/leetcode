@@ -13,29 +13,24 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
      *  whichever one I _don't_ store will just be found pointing to the one I _did store.
      */
     let lookup: HashMap<i32, usize> = nums.iter().copied().enumerate().map(swap).collect();
+
     let (idx, first) = nums
         .into_iter()
         .enumerate()
         .find(|(i, x)| {
             lookup
                 .get(&(target - x))
-                .copied()
-                /*
-                 *  I want there to be a better pattern for this?  Option implements Eq, but
-                 *  that's... not quite the same semantics
-                 */
-                .filter(|j| j != i)
-                .is_some()
+                .map_or(false, |j| j != i)
         })
+        /*
+         *  Blech.  But the constraint is there _will_ be a solution, so the return
+         *  type does not allow for Monads
+         */
         .unwrap();
-    /*
-     *  Blech.  But the constraint is there _will_ be a solution, so the return
-     *  type does not allow for Monads
-     */
 
-    vec![idx, lookup.get(&(target - first)).copied().unwrap()]
+    [idx, lookup[&(target - first)]]
         .into_iter()
-        .map(|i| i as i32)
+        .map(|i| i as i32) // Don't love this.
         .collect()
 }
 
