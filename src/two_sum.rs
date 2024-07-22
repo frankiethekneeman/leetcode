@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 /*
+ *  From the leetcode: https://leetcode.com/problems/two-sum/description/
  *  I did not get to choose the signature here.  I believe it should return (usize, usize)...
  *  or even Option<(usize, usize)>.
  */
