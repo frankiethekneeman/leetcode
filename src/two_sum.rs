@@ -4,7 +4,7 @@ use std::collections::HashMap;
  *  I did not get to choose the signature here.  I believe it should return (usize, usize)...
  *  or even Option<(usize, usize)>.
  */
-pub fn two_sum(nums: Vec<i32>, target: i32) -> Option<(usize, usize)>{
+pub fn two_sum(nums: Vec<i32>, target: i32) -> Option<(usize, usize)> {
     /*
      *  Per the Constraints of the problem, there will only ever be exactly one solution.
      *  incidentally, this means that either there will only be exactly _two_ of a number, or
@@ -12,14 +12,24 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Option<(usize, usize)>{
      *  a single index for a given value, as during sum finding, it either won't matter, or
      *  whichever one I _don't_ store will just be found pointing to the one I _did store.
      */
-    let lookup: HashMap<i32, usize> = nums.iter().copied().enumerate().map(swap).collect();
+    let lookup: HashMap<i32, usize> = nums
+        .iter()
+        .copied()
+        .enumerate()
+        .map(swap)
+        .collect();
 
     let (idx, first) = nums
         .into_iter()
         .enumerate()
-        .find(|(i, x)| lookup.get(&(target - x)).map_or(false, |j| j != i))?;
+        .find(|(i, x)| {
+            lookup
+                .get(&(target - x))
+                .map_or(false, |j| j != i)
+        })?;
 
-    lookup.get(&(target - first))
+    lookup
+        .get(&(target - first))
         .map(|i| (idx, *i))
 }
 
