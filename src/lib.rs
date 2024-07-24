@@ -1,3 +1,4 @@
+pub mod two_sum;
 pub mod add_two_numbers;
 
 pub fn add(left: usize, right: usize) -> usize {
